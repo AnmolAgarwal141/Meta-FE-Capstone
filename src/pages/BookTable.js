@@ -23,7 +23,6 @@ const BookTable = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
 
   const handleChange = (e) => {
-    console.log(e.target);
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -98,21 +97,12 @@ const BookTable = () => {
         </div>
         <div className="mb-6">
           <label className="block text-lg font-semibold text-green-800 mb-2" htmlFor='time'>Time</label>
-          {/* <input
-            id='time'
-            type="time"
-            name="time"
-            value={formData.time}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border-2 border-green-400 rounded-xl focus:outline-none focus:border-green-600"
-          /> */}
             <select
             id='time'
             name='time'
             value={formData.time}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-3 border-2 border-green-400 rounded-xl focus:outline-none focus:border-green-600"
             required
             >
             <option value="">Select Time</option>
