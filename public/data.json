@@ -1,0 +1,7 @@
+{
+    "menu":[
+        {"name":"Bruchetta", "price":"$12.99", "images":"./dish1.svg"},
+        {"name":"Greek Salad", "price":"$8.99", "images":"./dish2.jpg"},
+        {"name":"Lemon Desert", "price":"$7.49", "images":"./dish3.jpg"}
+    ]
+}

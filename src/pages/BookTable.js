@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addReservation } from '../store';
+import { addReservation } from '../store/reservationSlice';
+
+const generateTimeSlots = () => {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const formattedHour = hour.toString().padStart(2, '0');
+        const formattedMinute = minute.toString().padStart(2, '0');
+        times.push(`${formattedHour}:${formattedMinute}`);
+      }
+    }
+    return times;
+  };
+
+  const timeSlots = generateTimeSlots();
 
 const BookTable = () => {
     const [formData, setFormData] = useState({ name: '', guests: '', date: '', time: '' });
@@ -9,6 +23,7 @@ const BookTable = () => {
     const [message, setMessage] = useState({ text: '', type: '' });
 
   const handleChange = (e) => {
+    console.log(e.target);
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -23,6 +38,15 @@ const BookTable = () => {
     if (existingBooking) {
       setMessage({ text: 'You already have a reservation for this date.', type: 'error' });
       return;
+    }
+
+    const reservationsForSlot = reservations.filter(
+        (res) => res.date === formData.date && res.time === formData.time
+      );
+
+    if (reservationsForSlot.length >= 5) {
+        setMessage({ text: 'Slot is full. Please choose another time.', type: 'error' });
+        return;
     }
 
     dispatch(addReservation(formData));
@@ -74,7 +98,7 @@ const BookTable = () => {
         </div>
         <div className="mb-6">
           <label className="block text-lg font-semibold text-green-800 mb-2" htmlFor='time'>Time</label>
-          <input
+          {/* <input
             id='time'
             type="time"
             name="time"
@@ -82,7 +106,22 @@ const BookTable = () => {
             onChange={handleChange}
             required
             className="w-full p-3 border-2 border-green-400 rounded-xl focus:outline-none focus:border-green-600"
-          />
+          /> */}
+            <select
+            id='time'
+            name='time'
+            value={formData.time}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+            >
+            <option value="">Select Time</option>
+            {timeSlots.map((slot) => (
+                <option key={slot} value={slot}>
+                {slot}
+                </option>
+            ))}
+            </select>
         </div>
         <button
           type="submit"

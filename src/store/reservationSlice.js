@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const reservationsSlice = createSlice({
   name: 'reservations',
@@ -11,11 +11,4 @@ const reservationsSlice = createSlice({
 });
 
 export const { addReservation } = reservationsSlice.actions;
-
-const store = configureStore({
-  reducer: {
-    reservations: reservationsSlice.reducer,
-  },
-});
-
-export default store;
+export default reservationsSlice.reducer;
